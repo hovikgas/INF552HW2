@@ -10,14 +10,14 @@ from sklearn import cross_validation
 from sklearn import ensemble
 
 # Import CSV file and get some info on it
-df = pd.read_csv('join_data_extract3.csv',header='infer')
+df = pd.read_csv('hw2b.csv',header='infer')
 df.info()
 
 # convert from pandas to numpy
 county = df.values
 
 # split the data to X,y which is attributes and output class (small y)
-X,y = county[:,:4], county[:,4]
+X,y = county[:,:2], county[:,2]
 # This selects all rows then X holds first 6 column attributes and y the last column as class (i.e. 1 dimension array)
 
 #impute missing values
@@ -31,7 +31,7 @@ X,y = X.astype(int), y.astype(int)
 X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(X,y,test_size=0.3,random_state=0)
 
 # set up the Random Forest Classifier with 10 trees in the forest
-clf = ensemble.RandomForestClassifier(n_estimators=100, verbose=1)
+clf = ensemble.RandomForestClassifier(n_estimators=10000, verbose=1, criterion="entropy")
 
 # feed the classifier with the training data
 clf.fit(X_train,y_train)
