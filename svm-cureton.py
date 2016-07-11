@@ -6,20 +6,22 @@ import pandas as pd
 import numpy as np
 
 # Import CSV file and get info on it
-df = pd.read_csv('join_data_extract3.csv',header=0,sep=',')
+df = pd.read_csv('hw2b.csv',header=0,sep=',')
 df.info()
 
 # convert from pandas to numpy
 mssa = df.values
 
-# split the data to X,y which is attributes and output class (small y)
+# split the data to X,y which is attributes (X) and output class (y)
 
-X,y = mssa[:,1:5], mssa[:,0]
+X,y = mssa[:,7:10], mssa[:,6]
 
 # This selects all rows then X holds feature attributes of interest and y as class (i.e. 1 dimension array)
 
 # make sure that all the values in numpy are int to avoid potential numpy problems
-#X,y = X.astype(int), y.astype(int)
+X,y = X.astype(float), y.astype(int)
+print ('X', X)
+print ('y', y)
 
 # import scikit learn
 import sklearn
@@ -28,13 +30,13 @@ import sklearn
 from sklearn import cross_validation
 
 # split the data for 80% training and 20% for testing in scikit ML
-X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(X,y,test_size=0.3,random_state=0)
+X_train, X_test, y_train, y_test = sklearn.cross_validation.train_test_split(X,y,test_size=0.5,random_state=0)
 
 # import ensemble from scikit
 from sklearn import ensemble
 
-# set up the Random Forest Classifier with 1000 trees
-clf = ensemble.RandomForestClassifier(n_estimators=1000, verbose=1)
+# set up the Random Forest Classifier with 100 trees
+clf = ensemble.RandomForestClassifier(n_estimators=100, verbose=1)
 
 # fit the classifier with the training data
 clf.fit(X_train,y_train)
@@ -57,14 +59,14 @@ plt.show()
 # import SVC from scikit
 from sklearn.svm import SVC
 
-#use SVR
-clf = SVC(kernel='linear')
+#use SVC
+clf = SVC(kernel='linear', C=500)
 clf.fit(X_train, y_train) 
 y_pred = clf.predict(X_test)
 print (clf.score(X_test, y_test))
 print (y_pred)
-#print (clf.get_params())
-#print (clf.decision_function(X_test))
+print (clf.get_params())
+print (clf.decision_function(X_test))
 
 # get the separating hyperplane
 w = clf.coef_[0]
