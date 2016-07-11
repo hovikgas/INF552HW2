@@ -7,14 +7,14 @@ Created on Sun Jul 10 21:22:10 2016
 import numpy as np
 
 
-# Whole Class with additions:
+# Neural network with 1 hidden layer
 
 class Neural_Network(object):
     def __init__(self):        
         #Define Hyperparameters
-        self.inputLayerSize = 15
-        self.outputLayerSize = 1
-        self.hiddenLayerSize = 20
+        self.inputLayerSize = 15 # number of independent variables
+        self.outputLayerSize = 1 # number of dependent variables
+        self.hiddenLayerSize = 20 # number of nodes in the hidden layer
         
         #Weights (parameters)
         self.W1 = np.random.randn(self.inputLayerSize,self.hiddenLayerSize)
